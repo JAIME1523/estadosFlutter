@@ -1,4 +1,7 @@
+import 'package:estados/models/usuario.dart';
 import 'package:flutter/material.dart';
+
+import '../services/usuario_service.dart';
 
 class Pagina1Page extends StatelessWidget {
   const Pagina1Page({Key? key}) : super(key: key);
@@ -9,7 +12,18 @@ class Pagina1Page extends StatelessWidget {
         appBar: AppBar(
           title: const Center(child: Text('Pagina 1 ')),
         ),
-        body: const _InformacionUsuario(),
+        body: StreamBuilder(
+          stream: usuarioService.usuarioStream,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            return snapshot.hasData
+                ? _InformacionUsuario(
+                    usuario: usuarioService.usuario!,
+                  )
+                : const Center(
+                    child: Text('NO HAY INFO DEL USUARIO'),
+                  );
+          },
+        ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.accessibility_new),
           onPressed: () {
@@ -20,36 +34,40 @@ class Pagina1Page extends StatelessWidget {
 }
 
 class _InformacionUsuario extends StatelessWidget {
+  final Usuario usuario;
+
   const _InformacionUsuario({
     Key? key,
+    required this.usuario,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text('Gneral',
+          children: [
+            const Text('Gneral',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Divider(),
+            const Divider(),
             ListTile(
-              title: Text('Nombre: '),
+              title: Text('Nombre: ${usuario.nombre}'),
             ),
             ListTile(
-              title: Text('Edad: '),
+              title: Text('Edad:${usuario.edad} '),
             ),
-            Text('Profecion',
+            const Text('Profecion',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Divider(),
-             ListTile(
+            const Divider(),
+            const ListTile(
               title: Text('Profecion1: '),
             ),
-             ListTile(
+            const ListTile(
               title: Text('Profecion1: '),
-            ), ListTile(
+            ),
+            const ListTile(
               title: Text('Profecion1: '),
             ),
           ],

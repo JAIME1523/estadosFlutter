@@ -1,7 +1,10 @@
-class Usuario {
-  late String nombre;
-  late int edad;
-  late List<String> profeciones;
 
-  Usuario({nombre, edad, profeciones});
+class Usuario {
+
+
+  Usuario({ required this.nombre,  this.edad = 0, profeciones}); 
+
+   String? nombre;
+   int edad = 0;
+   List<String>? profeciones;
 }
