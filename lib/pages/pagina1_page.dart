@@ -11,10 +11,18 @@ class Pagina1Page extends StatelessWidget {
     final usuarioService = Provider.of<UsuarioService>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: Text('Pagina 1 ')),
+          title: const Center(child: Text('Pagina 1 ')),
+          actions: [
+            IconButton(onPressed: () {
+              //remover Usuario
+              usuarioService.removerUsuario();
+            }, icon: const Icon(Icons.exit_to_app))
+          ],
         ),
         body: usuarioService.existeUsuario
-            ?  _InformacionUsuario(usuario: usuarioService.usuario,)
+            ? _InformacionUsuario(
+                usuario: usuarioService.usuario,
+              )
             : const Center(
                 child: Text('No hay usuario seleccionado'),
               ),
@@ -29,39 +37,37 @@ class Pagina1Page extends StatelessWidget {
 
 class _InformacionUsuario extends StatelessWidget {
   const _InformacionUsuario({
-    Key? key, required this.usuario,
+    Key? key,
+    required this.usuario,
   }) : super(key: key);
-final Usuario usuario ;
+  final Usuario usuario;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:  [
-            Text('Gneral',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Divider(),
-            ListTile(
-              title: Text('Nombre: ${usuario.nombre} '),
-            ),
-            ListTile(
-              title: Text('Edad: ${usuario.edad}'),
-            ),
-            Text('Profecion',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Divider(),
-            ListTile(
-              title: Text('Profecion1: '),
-            ),
-            ListTile(
-              title: Text('Profecion1: '),
-            ),
-            ListTile(
-              title: Text('Profecion1: '),
-            ),
-          ],
+        child: SingleChildScrollView(
+          physics:const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Gneral',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Divider(),
+              ListTile(
+                title: Text('Nombre: ${usuario.nombre} '),
+              ),
+              ListTile(
+                title: Text('Edad: ${usuario.edad}'),
+              ),
+              const Text('Profecion',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Divider(),
+              //des estructurar para cpmvertir la lista de tipo string en Widget
+            
+           ...usuario.profeciones!.map((e) => ListTile(title: Text(e),)).toList(),
+            ],
+          ),
         ));
   }
 }

@@ -8,10 +8,13 @@ class Pagina2Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usuarioService = Provider.of<UsuarioService>(context, );
     return Scaffold(
       appBar: AppBar(
-          title: const Center(
-        child: Text('Pagina 2 '),
+          title: Center(
+        child: usuarioService.existeUsuario
+            ? Text("Nombre ${usuarioService.usuario.nombre}")
+            : const Text('Pagina 2 '),
       )),
       body: Center(
           child: Column(
@@ -24,13 +27,11 @@ class Pagina2Page extends StatelessWidget {
                     color: Colors.white,
                   )),
               onPressed: () async {
-                   final usuarioService =
-                     Provider.of<UsuarioService>(context, listen: false);
-                final newUser = 
-                    Usuario(edad: 25, nombre: "Jaime vivar Hidalgo",profeciones: [] );
-                    print(newUser.edad);
-             
-                usuarioService.usuario =  newUser;
+                final newUser = Usuario(
+                    edad: 25, nombre: "Jaime vivar Hidalgo", profeciones: [
+                      'Full stack developer', 'Video jugador pro'
+                    ]);
+                usuarioService.usuario = newUser;
               }),
           MaterialButton(
               color: Colors.blue,
@@ -38,14 +39,19 @@ class Pagina2Page extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                   )),
-              onPressed: () {}),
+              onPressed: () {
+                usuarioService.cambiarEdad(30);
+                Navigator.pop(context);
+              }),
           MaterialButton(
               color: Colors.blue,
               child: const Text('Añadir profecion',
                   style: TextStyle(
                     color: Colors.white,
                   )),
-              onPressed: () {}),
+              onPressed: () {
+                usuarioService.agregarProfecion();
+              }),
         ],
       )),
     );
