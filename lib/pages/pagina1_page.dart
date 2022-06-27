@@ -8,6 +8,9 @@ class Pagina1Page extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Center(child: Text('Pagina 1 ')),
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.exit_to_app))
+          ],
         ),
         body: const _InformacionUsuario(),
         floatingActionButton: FloatingActionButton(
@@ -26,7 +29,7 @@ class _InformacionUsuario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Column(
@@ -44,12 +47,13 @@ class _InformacionUsuario extends StatelessWidget {
             Text('Profecion',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             Divider(),
-             ListTile(
+            ListTile(
               title: Text('Profecion1: '),
             ),
-             ListTile(
+            ListTile(
               title: Text('Profecion1: '),
-            ), ListTile(
+            ),
+            ListTile(
               title: Text('Profecion1: '),
             ),
           ],
