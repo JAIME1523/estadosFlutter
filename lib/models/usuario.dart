@@ -1,7 +1,6 @@
 class Usuario {
-  late String nombre;
-  late int edad;
-  late List<String> profeciones;
-
-  Usuario({nombre, edad, profeciones});
+   String? nombre;
+   int? edad;
+   List<String> profeciones = [];
+  Usuario({this.nombre, this.edad, required this.profeciones});
 }
